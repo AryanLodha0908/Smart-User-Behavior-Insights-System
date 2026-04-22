@@ -27,9 +27,12 @@ const parseFilters = async (req) => {
 // Get overall statistics
 router.get('/stats', async (req, res) => {
   try {
+    console.log('📍 GET /api/analytics/stats - Fetching statistics...');
     const query = await parseFilters(req);
+    console.log('🔍 Query Filter:', JSON.stringify(query));
 
     const sessions = await Session.find(query);
+    console.log(`✅ Found ${sessions.length} sessions`);
 
     const stats = {
       totalUsers: new Set(sessions.map(s => s.userId)).size,
@@ -48,7 +51,14 @@ router.get('/stats', async (req, res) => {
 
     res.json(stats);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('❌ /api/analytics/stats Error:', err);
+    console.error('📝 Error Message:', err.message);
+    console.error('🔗 Connection State:', require('mongoose').connection.readyState);
+    res.status(500).json({ 
+      error: err.message,
+      dbConnected: require('mongoose').connection.readyState === 1,
+      type: 'STATS_FETCH_ERROR'
+    });
   }
 });
 

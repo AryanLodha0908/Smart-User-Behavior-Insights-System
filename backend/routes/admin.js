@@ -9,10 +9,19 @@ const router = express.Router();
 // Get all websites
 router.get('/websites', async (req, res) => {
   try {
+    console.log('📍 GET /api/admin/websites - Fetching websites...');
     const websites = await Website.find();
+    console.log(`✅ Found ${websites.length} websites`);
     res.json(websites);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('❌ /api/admin/websites Error:', err);
+    console.error('📝 Error Message:', err.message);
+    console.error('🔗 Connection State:', require('mongoose').connection.readyState); // 0=disconnected, 1=connected
+    res.status(500).json({ 
+      error: err.message,
+      dbConnected: require('mongoose').connection.readyState === 1,
+      type: 'WEBSITE_FETCH_ERROR'
+    });
   }
 });
 

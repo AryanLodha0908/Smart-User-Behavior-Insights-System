@@ -25,12 +25,28 @@ app.use(express.static(path.join(__dirname, '../tracking-script'), {
 }));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/behavior_insights', {
+const mongoUri = process.env.MONGODB_URI;
+if (!mongoUri) {
+  console.error('❌ MONGODB_URI environment variable is not set!');
+}
+console.log('🔄 Attempting to connect to MongoDB...');
+console.log('📍 Connection String:', mongoUri ? mongoUri.substring(0, 50) + '...' : 'NOT SET');
+
+mongoose.connect(mongoUri || 'mongodb://localhost:27017/behavior_insights', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  maxPoolSize: 10,
+  retryWrites: true,
+  w: 'majority'
 })
-.then(() => console.log('✅ MongoDB Connected'))
-.catch(err => console.error('❌ MongoDB Error:', err));
+.then(() => {
+  console.log('✅ MongoDB Connected Successfully');
+  console.log('📊 Database:', mongoose.connection.db?.databaseName);
+})
+.catch(err => {
+  console.error('❌ MongoDB Connection Error:', err.message);
+  console.error('❌ Full Error:', err);
+});
 
 // Routes
 app.use('/api/tracking', require('./routes/tracking'));
@@ -40,7 +56,24 @@ app.use('/api/admin', require('./routes/admin'));
 
 // Health Check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+  const mongoState = mongoose.connection.readyState;
+  const states = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting'
+  };
+  
+  res.json({ 
+    status: mongoState === 1 ? 'healthy' : 'degraded',
+    timestamp: new Date().toISOString(),
+    database: {
+      connected: mongoState === 1,
+      state: states[mongoState],
+      connectionString: process.env.MONGODB_URI ? 'SET' : 'NOT SET',
+      name: mongoose.connection.db?.databaseName || 'N/A'
+    }
+  });
 });
 
 // Error Handler

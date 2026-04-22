@@ -16,12 +16,34 @@
   // Configuration
   const config = window.BehaviorTracking || {};
   const trackingId = config.trackingId;
-  const apiUrl = config.apiUrl || 'http://localhost:5000/api';
+  
+  // Auto-detect API URL - smart fallback strategy
+  let apiUrl = config.apiUrl;
+  if (!apiUrl) {
+    // If not explicitly set, try to detect from environment
+    // Priority: config.apiUrl > same domain > localhost:5000
+    const currentHost = window.location.hostname;
+    const currentProtocol = window.location.protocol;
+    
+    // If running on Vercel or any domain
+    if (currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
+      // Use same domain, same protocol
+      apiUrl = `${currentProtocol}//${currentHost}/api`;
+    } else {
+      // Local development: try localhost:5000
+      apiUrl = 'http://localhost:5000/api';
+    }
+  }
 
   if (!trackingId) {
     console.error('Behavior Tracker: trackingId not configured');
+    console.warn('Usage: window.BehaviorTracking = { trackingId: "YOUR_ID_HERE" };');
     return;
   }
+  
+  console.log('✅ Behavior Tracker initialized');
+  console.log('📍 Tracking ID:', trackingId);
+  console.log('🔗 API URL:', apiUrl);
 
   // Session management
   let sessionData = {
@@ -73,12 +95,22 @@
       ...data
     };
 
-    fetch(`${apiUrl}/tracking/${eventType}`, {
+    const endpoint = `${apiUrl}/tracking/${eventType}`;
+    
+    fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       keepalive: true
-    }).catch(err => console.debug('Tracking event failed:', err));
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.warn(`⚠️ Tracking event failed: ${eventType} - Status ${response.status}`);
+      }
+    })
+    .catch(err => {
+      console.debug('📌 Tracking debug:', { endpoint, error: err.message, eventType });
+    });
 
     sessionData.lastActivityTime = Date.now();
   }
@@ -145,8 +177,11 @@
 
   // Initialize tracking
   function init() {
+    console.log('🚀 Initializing Behavior Tracker...');
+    
     // Page view
     trackPageView();
+    console.log('📊 Page view tracked');
 
     // Click tracking
     document.addEventListener('click', trackClick);

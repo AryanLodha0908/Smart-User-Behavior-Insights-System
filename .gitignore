@@ -15,7 +15,5 @@ Thumbs.db
 *.swp
 *.swo
 *~
-.env.example
 .db
 *.db
-.DS_Store
