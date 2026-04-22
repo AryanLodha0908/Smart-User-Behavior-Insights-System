@@ -16,6 +16,29 @@ function App() {
     axios.get(`${API_BASE_URL}/health`)
       .then(() => setApiConnected(true))
       .catch(err => console.error('API Connection failed:', err));
+
+    // Load tracker script after React mounts
+    const loadTracker = () => {
+      const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+      const trackerUrl = isProduction 
+        ? 'https://smart-user-behavior-insights-system.vercel.app/tracker.js'
+        : '/tracker.js';
+      
+      const script = document.createElement('script');
+      script.src = trackerUrl;
+      script.async = true;
+      script.onerror = () => {
+        console.warn('Failed to load tracker from:', trackerUrl);
+        // Fallback to same origin
+        const fallback = document.createElement('script');
+        fallback.src = '/tracker.js';
+        fallback.async = true;
+        document.body.appendChild(fallback);
+      };
+      document.body.appendChild(script);
+    };
+
+    loadTracker();
   }, []);
 
   return (

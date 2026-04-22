@@ -5,48 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart User Behavior Insights System</title>
   
-  <!-- Behavior Tracking Script -->
+  <!-- Behavior Tracking Configuration -->
   <script>
-    // Configure tracking before loading tracker.js
-    // Get the tracking ID from the admin dashboard or use a test ID
-    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    
     window.BehaviorTracking = {
       trackingId: 'behavior-insights-dashboard-test-id',
       trackMouse: true,
-      inactivityTimeout: 30 * 60 * 1000 // 30 minutes
+      inactivityTimeout: 30 * 60 * 1000
     };
-  </script>
-  <!-- Load tracker with intelligent fallback for Vercel deployment -->
-  <script>
-    (function() {
-      const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-      
-      // In production on Vercel, try to load from the backend Vercel URL first
-      let trackerUrl = '/tracker.js'; // Default: same domain
-      
-      if (isProduction) {
-        // Try to load from known production backend first
-        trackerUrl = 'https://smart-user-behavior-insights-system.vercel.app/tracker.js';
-      }
-      
-      const script = document.createElement('script');
-      script.src = trackerUrl;
-      script.onerror = function() {
-        console.warn('Failed to load tracker from:', trackerUrl);
-        // Fallback: try from same origin/domain
-        const fallbackScript = document.createElement('script');
-        fallbackScript.src = '/tracker.js';
-        fallbackScript.onerror = function() {
-          console.error('Failed to load tracker from both sources');
-        };
-        document.head.appendChild(fallbackScript);
-      };
-      document.head.appendChild(script);
-    })();
   </script>
 </head>
 <body>
   <div id="root"></div>
+</body>
+</html>
 </body>
 </html>
