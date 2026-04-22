@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart User Behavior Insights System</title>
+  
+  <!-- Behavior Tracking Script -->
+  <script>
+    // Configure tracking before loading tracker.js
+    // Get the tracking ID from the admin dashboard or use a test ID
+    window.BehaviorTracking = {
+      trackingId: 'behavior-insights-dashboard-test-id',
+      trackMouse: true,
+      inactivityTimeout: 30 * 60 * 1000 // 30 minutes
+    };
+  </script>
+  <!-- Load tracker from backend API endpoint -->
+  <script src="/tracker.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
