@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - behavior-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      MONGODB_URI: mongodb://root:root@mongodb:27017/behavior_insights?authSource=admin
+      PORT: 5000
+      NODE_ENV: production
+    networks:
+      - behavior-network
+    volumes:
+      - ./backend:/app
+
+  ml-service:
+    build:
+      context: ./ml
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://root:root@mongodb:27017/behavior_insights?authSource=admin
+    networks:
+      - behavior-network
+    volumes:
+      - ./ml:/app
+      - ./ml/models:/app/models
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://localhost:5000
+    networks:
+      - behavior-network
+    volumes:
+      - ./frontend:/app
+
+volumes:
+  mongodb_data:
+
+networks:
+  behavior-network:
+    driver: bridge

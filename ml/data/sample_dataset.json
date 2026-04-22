@@ -1,0 +1,231 @@
+[
+  {
+    "sessionId": "827c04ed-e44e-48d1-a91d-0cd69df0544f",
+    "userId": "34309ea2-67b4-4af6-bd08-945545a8f051",
+    "websiteId": "69e7a46643ac84e1fbf6cb91",
+    "startTime": "2026-04-21 09:53:55.617624",
+    "endTime": "2026-04-21 05:53:55.617624",
+    "duration": 134,
+    "pages": [
+      {
+        "url": "/contact",
+        "title": "Contact",
+        "timeOnPage": 93,
+        "scrollDepth": 63,
+        "clicks": 1,
+        "timestamp": "2026-04-21 21:23:55.618622"
+      },
+      {
+        "url": "/blog/post-1",
+        "title": "Blog Post 1",
+        "timeOnPage": 78,
+        "scrollDepth": 42,
+        "clicks": 3,
+        "timestamp": "2026-04-21 21:43:55.618622"
+      }
+    ],
+    "totalClicks": 5,
+    "totalScrollDepth": 53,
+    "avgScrollDepth": 53,
+    "engagementScore": 4.208955178476206,
+    "bounced": false,
+    "bounceProb": 0.5791044821523794,
+    "deviceType": "mobile",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15",
+    "location": {
+      "country": "CA",
+      "city": "Sydney"
+    },
+    "createdAt": "2026-04-21 21:53:55.618622",
+    "updatedAt": "2026-04-21 21:53:55.618622",
+    "_id": "69e7a49bb98c5de1ff5fc685"
+  },
+  {
+    "sessionId": "27308174-dd86-4880-99e8-d056c08ae3f0",
+    "userId": "2d287a21-5132-4eb3-8d3d-7d5cfad9296f",
+    "websiteId": "69e7a46643ac84e1fbf6cb93",
+    "startTime": "2026-04-19 21:53:55.624620",
+    "endTime": "2026-04-19 10:53:55.624620",
+    "duration": 277,
+    "pages": [
+      {
+        "url": "/about",
+        "title": "About Us",
+        "timeOnPage": 15,
+        "scrollDepth": 83,
+        "clicks": 2,
+        "timestamp": "2026-04-21 21:19:55.624620"
+      }
+    ],
+    "totalClicks": 1,
+    "totalScrollDepth": 53,
+    "avgScrollDepth": 53,
+    "engagementScore": 5.223808237717838,
+    "bounced": false,
+    "bounceProb": 0.4776191762282162,
+    "deviceType": "desktop",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
+    "location": {
+      "country": "US",
+      "city": "London"
+    },
+    "createdAt": "2026-04-21 21:53:55.624620",
+    "updatedAt": "2026-04-21 21:53:55.624620",
+    "_id": "69e7a49bb98c5de1ff5fc686"
+  },
+  {
+    "sessionId": "05a12f50-f428-4dda-942d-0c6fb4df3932",
+    "userId": "52a9722d-c4a7-430d-b1d6-5a581bdc6cf3",
+    "websiteId": "69e7a46643ac84e1fbf6cb93",
+    "startTime": "2026-04-17 23:53:55.626621",
+    "endTime": "2026-04-20 23:53:55.626621",
+    "duration": 114,
+    "pages": [
+      {
+        "url": "/blog/post-1",
+        "title": "Blog Post 1",
+        "timeOnPage": 81,
+        "scrollDepth": 31,
+        "clicks": 0,
+        "timestamp": "2026-04-21 21:33:55.626621"
+      },
+      {
+        "url": "/about",
+        "title": "About Us",
+        "timeOnPage": 41,
+        "scrollDepth": 83,
+        "clicks": 0,
+        "timestamp": "2026-04-21 21:39:55.626621"
+      },
+      {
+        "url": "/contact",
+        "title": "Contact",
+        "timeOnPage": 76,
+        "scrollDepth": 86,
+        "clicks": 1,
+        "timestamp": "2026-04-21 20:53:55.626621"
+      }
+    ],
+    "totalClicks": 5,
+    "totalScrollDepth": 53,
+    "avgScrollDepth": 53,
+    "engagementScore": 4.530504129233705,
+    "bounced": false,
+    "bounceProb": 0.5469495870766294,
+    "deviceType": "desktop",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+    "location": {
+      "country": "UK",
+      "city": "Berlin"
+    },
+    "createdAt": "2026-04-21 21:53:55.626621",
+    "updatedAt": "2026-04-21 21:53:55.626621",
+    "_id": "69e7a49bb98c5de1ff5fc687"
+  },
+  {
+    "sessionId": "64f1249a-6f4c-4aa5-8f5b-1edfa6d5f606",
+    "userId": "ccea2227-a06e-4118-ba8d-e7c73707c598",
+    "websiteId": "69e7a46643ac84e1fbf6cb93",
+    "startTime": "2026-04-16 12:53:55.627623",
+    "endTime": "2026-04-21 04:53:55.627623",
+    "duration": 94,
+    "pages": [
+      {
+        "url": "/pricing",
+        "title": "Pricing",
+        "timeOnPage": 98,
+        "scrollDepth": 34,
+        "clicks": 4,
+        "timestamp": "2026-04-21 21:29:55.627623"
+      },
+      {
+        "url": "/about",
+        "title": "About Us",
+        "timeOnPage": 87,
+        "scrollDepth": 87,
+        "clicks": 3,
+        "timestamp": "2026-04-21 21:10:55.627623"
+      },
+      {
+        "url": "/home",
+        "title": "Home",
+        "timeOnPage": 115,
+        "scrollDepth": 77,
+        "clicks": 1,
+        "timestamp": "2026-04-21 21:13:55.627623"
+      },
+      {
+        "url": "/blog/post-1",
+        "title": "Blog Post 1",
+        "timeOnPage": 55,
+        "scrollDepth": 88,
+        "clicks": 4,
+        "timestamp": "2026-04-21 21:37:55.627623"
+      }
+    ],
+    "totalClicks": 2,
+    "totalScrollDepth": 44,
+    "avgScrollDepth": 44,
+    "engagementScore": 4.256906519288272,
+    "bounced": false,
+    "bounceProb": 0.5743093480711728,
+    "deviceType": "desktop",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15",
+    "location": {
+      "country": "CA",
+      "city": "Berlin"
+    },
+    "createdAt": "2026-04-21 21:53:55.627623",
+    "updatedAt": "2026-04-21 21:53:55.627623",
+    "_id": "69e7a49bb98c5de1ff5fc688"
+  },
+  {
+    "sessionId": "75074058-1e7c-4821-815e-4d9d0a3ee54b",
+    "userId": "767c2fb2-d97f-4ce5-9e7c-439b0c473fb0",
+    "websiteId": "69e7a46643ac84e1fbf6cb93",
+    "startTime": "2026-04-20 12:53:55.629630",
+    "endTime": "2026-04-21 13:53:55.629630",
+    "duration": 87,
+    "pages": [
+      {
+        "url": "/about",
+        "title": "About Us",
+        "timeOnPage": 28,
+        "scrollDepth": 94,
+        "clicks": 0,
+        "timestamp": "2026-04-21 21:33:55.629630"
+      },
+      {
+        "url": "/products",
+        "title": "Products",
+        "timeOnPage": 22,
+        "scrollDepth": 33,
+        "clicks": 0,
+        "timestamp": "2026-04-21 21:48:55.629630"
+      },
+      {
+        "url": "/blog",
+        "title": "Blog",
+        "timeOnPage": 64,
+        "scrollDepth": 20,
+        "clicks": 1,
+        "timestamp": "2026-04-21 21:06:55.629630"
+      }
+    ],
+    "totalClicks": 4,
+    "totalScrollDepth": 64,
+    "avgScrollDepth": 64,
+    "engagementScore": 5.035491830760912,
+    "bounced": false,
+    "bounceProb": 0.4964508169239088,
+    "deviceType": "desktop",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
+    "location": {
+      "country": "US",
+      "city": "Sydney"
+    },
+    "createdAt": "2026-04-21 21:53:55.629630",
+    "updatedAt": "2026-04-21 21:53:55.629630",
+    "_id": "69e7a49bb98c5de1ff5fc689"
+  }
+]
