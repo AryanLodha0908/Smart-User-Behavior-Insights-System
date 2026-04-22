@@ -39,14 +39,10 @@ const connectMongoDB = async (attempt = 1) => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       maxPoolSize: 3,
-      minPoolSize: 1,
-      maxIdleTimeMS: 30000,
       serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 60000,
-      connectTimeoutMS: 10000,
       retryWrites: true,
-      w: 'majority',
-      family: 4 // Use IPv4, skip IPv6 which can cause issues
+      w: 'majority'
     });
     console.log('✅ MongoDB Connected Successfully');
     console.log('📊 Database:', mongoose.connection.db?.databaseName);
