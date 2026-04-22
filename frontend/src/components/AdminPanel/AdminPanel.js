@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../../api';
 
 function AdminPanel() {
   const [websites, setWebsites] = useState([]);
@@ -20,7 +20,7 @@ function AdminPanel() {
 
   const fetchWebsites = async () => {
     try {
-      const response = await axios.get('/api/admin/websites');
+      const response = await apiClient.get('/admin/websites');
       setWebsites(response.data);
     } catch (error) {
       console.error('Error fetching websites:', error);
@@ -29,7 +29,7 @@ function AdminPanel() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('/api/admin/stats');
+      const response = await apiClient.get('/admin/stats');
       setStats(response.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -41,7 +41,7 @@ function AdminPanel() {
     if (!newWebsite.domain || !newWebsite.name) return;
 
     try {
-      await axios.post('/api/admin/websites', newWebsite);
+      await apiClient.post('/admin/websites', newWebsite);
       setNewWebsite({ domain: '', name: '' });
       fetchWebsites();
     } catch (error) {
@@ -52,7 +52,7 @@ function AdminPanel() {
   const handleDeleteWebsite = async (id) => {
     if (window.confirm('Delete this website?')) {
       try {
-        await axios.delete(`/api/admin/websites/${id}`);
+        await apiClient.delete(`/admin/websites/${id}`);
         fetchWebsites();
       } catch (error) {
         console.error('Error deleting website:', error);
@@ -62,7 +62,7 @@ function AdminPanel() {
 
   const handleRetrain = async () => {
     try {
-      const response = await axios.post('/api/admin/retrain-model');
+      const response = await apiClient.post('/admin/retrain-model');
       alert(`Model retrained! New accuracy: ${(response.data.accuracy * 100).toFixed(2)}%`);
       fetchStats();
     } catch (error) {

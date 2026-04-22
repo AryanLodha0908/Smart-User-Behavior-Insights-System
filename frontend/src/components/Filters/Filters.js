@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../../api';
 
 function Filters({ filters, setFilters, onExport }) {
   const [websites, setWebsites] = useState([]);
@@ -12,7 +12,7 @@ function Filters({ filters, setFilters, onExport }) {
 
   const fetchWebsites = async () => {
     try {
-      const response = await axios.get('/api/admin/websites');
+      const response = await apiClient.get('/admin/websites');
       setWebsites(response.data);
     } catch (error) {
       console.error('Error fetching websites:', error);

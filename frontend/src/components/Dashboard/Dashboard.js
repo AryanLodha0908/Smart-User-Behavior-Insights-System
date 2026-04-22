@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../../api';
 import StatCard from './StatCard';
 import Charts from '../Charts/Charts';
 import Filters from '../Filters/Filters';
@@ -53,7 +53,7 @@ function Dashboard() {
       };
 
       // Fetch current period stats
-      const statsRes = await axios.get('/api/analytics/stats', { params });
+      const statsRes = await apiClient.get('/analytics/stats', { params });
       setDashboardData(statsRes.data);
 
       // Calculate previous period (same number of days)
@@ -73,15 +73,15 @@ function Dashboard() {
       };
 
       // Fetch previous period stats for trends
-      const prevStatsRes = await axios.get('/api/analytics/stats', { params: prevParams });
+      const prevStatsRes = await apiClient.get('/analytics/stats', { params: prevParams });
       setPreviousData(prevStatsRes.data);
 
       // Fetch detailed analytics for charts
-      const analyticsRes = await axios.get('/api/analytics/timeline', { params });
+      const analyticsRes = await apiClient.get('/analytics/timeline', { params });
       setAnalyticsData(analyticsRes.data);
 
       // Fetch recent sessions
-      const sessionsRes = await axios.get('/api/sessions/recent', { params });
+      const sessionsRes = await apiClient.get('/sessions/recent', { params });
       setSessions(sessionsRes.data);
 
       setLoading(false);
@@ -99,7 +99,7 @@ function Dashboard() {
 
   const handleExport = async (format) => {
     try {
-      const response = await axios.get(`/api/analytics/export/${format}`, {
+      const response = await apiClient.get(`/analytics/export/${format}`, {
         params: filters,
         responseType: format === 'pdf' ? 'blob' : 'json'
       });
