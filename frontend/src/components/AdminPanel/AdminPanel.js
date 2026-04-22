@@ -137,7 +137,7 @@ function AdminPanel() {
                 <tr key={website._id}>
                   <td>{website.domain}</td>
                   <td>{website.name}</td>
-                  <td><code style={{ fontSize: '0.85rem' }}>{website.trackingId.substring(0, 12)}...</code></td>
+                  <td><code style={{ fontSize: '0.85rem', cursor: 'pointer' }} title="Click to copy" onClick={() => navigator.clipboard.writeText(website.trackingId)}>{website.trackingId}</code></td>
                   <td>{new Date(website.createdAt).toLocaleDateString()}</td>
                   <td>{website.sessions || 0}</td>
                   <td>

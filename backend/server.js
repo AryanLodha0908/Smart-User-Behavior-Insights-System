@@ -35,9 +35,15 @@ console.log('📍 Connection String:', mongoUri ? mongoUri.substring(0, 50) + '.
 mongoose.connect(mongoUri || 'mongodb://localhost:27017/behavior_insights', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  maxPoolSize: 10,
+  maxPoolSize: 5,
+  minPoolSize: 2,
+  maxIdleTimeMS: 45000,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
   retryWrites: true,
-  w: 'majority'
+  w: 'majority',
+  retryWrites: true,
+  maxRetries: 3
 })
 .then(() => {
   console.log('✅ MongoDB Connected Successfully');
