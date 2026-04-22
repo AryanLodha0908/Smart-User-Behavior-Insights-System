@@ -54,6 +54,23 @@ app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/sessions', require('./routes/sessions'));
 app.use('/api/admin', require('./routes/admin'));
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Smart User Behavior Insights API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      tracking: '/api/tracking',
+      analytics: '/api/analytics',
+      sessions: '/api/sessions',
+      admin: '/api/admin'
+    },
+    message: 'Backend API is running. Use /api/health to check database connectivity.'
+  });
+});
+
 // Health Check
 app.get('/api/health', (req, res) => {
   const mongoState = mongoose.connection.readyState;
