@@ -24,35 +24,44 @@ app.use(express.static(path.join(__dirname, '../tracking-script'), {
   }
 }));
 
-// MongoDB Connection
+// MongoDB Connection with aggressive retry
 const mongoUri = process.env.MONGODB_URI;
 if (!mongoUri) {
   console.error('❌ MONGODB_URI environment variable is not set!');
+  process.exit(1);
 }
 console.log('🔄 Attempting to connect to MongoDB...');
 console.log('📍 Connection String:', mongoUri ? mongoUri.substring(0, 50) + '...' : 'NOT SET');
 
-mongoose.connect(mongoUri || 'mongodb://localhost:27017/behavior_insights', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  maxPoolSize: 5,
-  minPoolSize: 2,
-  maxIdleTimeMS: 45000,
-  serverSelectionTimeoutMS: 5000,
-  socketTimeoutMS: 45000,
-  retryWrites: true,
-  w: 'majority',
-  retryWrites: true,
-  maxRetries: 3
-})
-.then(() => {
-  console.log('✅ MongoDB Connected Successfully');
-  console.log('📊 Database:', mongoose.connection.db?.databaseName);
-})
-.catch(err => {
-  console.error('❌ MongoDB Connection Error:', err.message);
-  console.error('❌ Full Error:', err);
-});
+const connectMongoDB = async (attempt = 1) => {
+  try {
+    await mongoose.connect(mongoUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      maxPoolSize: 3,
+      minPoolSize: 1,
+      maxIdleTimeMS: 30000,
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 60000,
+      connectTimeoutMS: 10000,
+      retryWrites: true,
+      w: 'majority',
+      family: 4 // Use IPv4, skip IPv6 which can cause issues
+    });
+    console.log('✅ MongoDB Connected Successfully');
+    console.log('📊 Database:', mongoose.connection.db?.databaseName);
+  } catch (err) {
+    console.error(`❌ MongoDB Connection Error (Attempt ${attempt}):`, err.message);
+    if (attempt < 3) {
+      console.log(`⏳ Retrying in 5 seconds... (Attempt ${attempt + 1}/3)`);
+      setTimeout(() => connectMongoDB(attempt + 1), 5000);
+    } else {
+      console.error('❌ Failed to connect to MongoDB after 3 attempts');
+    }
+  }
+};
+
+connectMongoDB();
 
 // Routes
 app.use('/api/tracking', require('./routes/tracking'));
