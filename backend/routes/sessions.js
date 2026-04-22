@@ -10,15 +10,28 @@ router.get('/recent', async (req, res) => {
     let query = {};
 
     if (req.query.startDate && req.query.endDate) {
+      const startDate = new Date(req.query.startDate);
+      const endDate = new Date(req.query.endDate);
+      endDate.setHours(23, 59, 59, 999); // Include entire end date
+      
       query.startTime = {
-        $gte: new Date(req.query.startDate),
-        $lte: new Date(req.query.endDate)
+        $gte: startDate,
+        $lte: endDate
       };
     }
 
     if (req.query.website && req.query.website !== 'all') {
-      const website = await Website.findOne({ domain: req.query.website });
-      if (website) query.websiteId = website._id;
+      // Try to find by domain first, then by name, then treat as ID
+      let website = await Website.findOne({ domain: req.query.website });
+      if (!website) {
+        website = await Website.findOne({ name: req.query.website });
+      }
+      if (!website) {
+        website = await Website.findById(req.query.website);
+      }
+      if (website) {
+        query.websiteId = website._id;
+      }
     }
 
     const sessions = await Session.find(query)
