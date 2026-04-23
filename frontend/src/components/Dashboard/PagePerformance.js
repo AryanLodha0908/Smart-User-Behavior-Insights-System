@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../../api';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function PagePerformance({ filters }) {
@@ -11,7 +11,7 @@ function PagePerformance({ filters }) {
 
   const fetchPagePerformance = async () => {
     try {
-      const response = await axios.get('/api/analytics/pages', { params: filters });
+      const response = await apiClient.get('/analytics/pages', { params: filters });
       setPageData(response.data);
     } catch (error) {
       console.error('Error fetching page performance:', error);

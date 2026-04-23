@@ -15,19 +15,19 @@ function RealtimeMetrics({ stats }) {
       <div className="metrics-grid">
         <div className="metric-item">
           <div className="metric-label">Live Visitors</div>
-          <div className="metric-value">{stats.activeSessions}</div>
+          <div className="metric-value">{stats.activeSessions || 0}</div>
         </div>
         <div className="metric-item">
           <div className="metric-label">Bounce Rate</div>
-          <div className="metric-value">{stats.bounceRate.toFixed(1)}%</div>
+          <div className="metric-value">{(stats.bounceRate ?? 0).toFixed(1)}%</div>
         </div>
         <div className="metric-item">
           <div className="metric-label">Avg Engagement</div>
-          <div className="metric-value">{stats.engagementScore.toFixed(2)}/10</div>
+          <div className="metric-value">{(stats.engagementScore ?? 0).toFixed(2)}/10</div>
         </div>
         <div className="metric-item">
           <div className="metric-label">Page Views Today</div>
-          <div className="metric-value">{stats.totalPageViews.toLocaleString()}</div>
+          <div className="metric-value">{(stats.totalPageViews || 0).toLocaleString()}</div>
         </div>
       </div>
     </div>

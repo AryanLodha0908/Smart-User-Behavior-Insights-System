@@ -173,15 +173,15 @@ function Dashboard() {
         />
         <StatCard
           label="Bounce Rate"
-          value={`${dashboardData.bounceRate.toFixed(1)}%`}
+          value={`${(dashboardData.bounceRate ?? 0).toFixed(1)}%`}
           icon="📉"
-          trend={{ value: -calculateTrend(dashboardData.bounceRate, previousData.bounceRate), positive: false, period: 'vs previous period' }}
+          trend={{ value: -calculateTrend(dashboardData.bounceRate ?? 0, previousData.bounceRate ?? 0), positive: false, period: 'vs previous period' }}
         />
         <StatCard
           label="Avg Engagement Score"
-          value={dashboardData.engagementScore.toFixed(2)}
+          value={(dashboardData.engagementScore ?? 0).toFixed(2)}
           icon="⭐"
-          trend={{ value: calculateTrend(dashboardData.engagementScore, previousData.engagementScore), positive: true, period: 'vs previous period' }}
+          trend={{ value: calculateTrend(dashboardData.engagementScore ?? 0, previousData.engagementScore ?? 0), positive: true, period: 'vs previous period' }}
         />
         <StatCard
           label="Total Page Views"
@@ -189,7 +189,7 @@ function Dashboard() {
           icon="📄"
           trend={{ value: calculateTrend(dashboardData.totalPageViews, previousData.totalPageViews), positive: true, period: 'vs previous period' }}
         />
-        />
+        
       </div>
 
       {/* Charts Section */}
@@ -234,18 +234,18 @@ function Dashboard() {
               <tbody>
                 {getSortedSessions().slice(0, 10).map((session) => (
                   <tr key={session._id}>
-                    <td><code>{session.sessionId.substring(0, 8)}</code></td>
-                    <td><code>{session.userId.substring(0, 8)}</code></td>
-                    <td>{Math.round(session.duration)}</td>
-                    <td>{session.pages.length}</td>
-                    <td>{session.engagementScore.toFixed(2)}</td>
+                    <td><code>{session.sessionId?.substring(0, 8) || 'N/A'}</code></td>
+                    <td><code>{session.userId?.substring(0, 8) || 'N/A'}</code></td>
+                    <td>{Math.round(session.duration || 0)}</td>
+                    <td>{session.pages?.length || 0}</td>
+                    <td>{(session.engagementScore ?? 0).toFixed(2)}</td>
                     <td>
                       <span className={`badge ${
-                        session.bounceProb > 0.6 ? 'badge-high' :
-                        session.bounceProb > 0.3 ? 'badge-medium' :
+                        (session.bounceProb ?? 0) > 0.6 ? 'badge-high' :
+                        (session.bounceProb ?? 0) > 0.3 ? 'badge-medium' :
                         'badge-low'
                       }`}>
-                        {(session.bounceProb * 100).toFixed(0)}%
+                        {((session.bounceProb ?? 0) * 100).toFixed(0)}%
                       </span>
                     </td>
                     <td>{new Date(session.startTime).toLocaleString()}</td>
